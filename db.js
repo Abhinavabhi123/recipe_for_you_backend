@@ -1,5 +1,5 @@
 const { Pool } = require("pg");
-const fs = require("fs");
+// const fs = require("fs");
 
 require("dotenv").config();
 
@@ -8,6 +8,7 @@ const pool = new Pool({
   user: "postgres",
   port: 5432,
   password: process.env.DB_PASSWORD,
+  database:"recipe"
 });
 
 // async function createDatabase() {

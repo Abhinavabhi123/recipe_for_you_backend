@@ -5,6 +5,7 @@ const cors = require("cors")
 const app = express();
 
 const recipeRoute = require("./Router/recipeRoute")
+const userRoute = require('./Router/userRoute')
 const pool = require('./db')
 
 require("dotenv").config();
@@ -34,6 +35,7 @@ app.use(cors({
 
 // Routes
 app.use("/recipe",recipeRoute)
+app.use("/user",userRoute)
 
 // Start the server
 app.listen(process.env.PORT || 4000, () =>
