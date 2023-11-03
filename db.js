@@ -33,7 +33,7 @@ const pool = new Pool({
 // const createSchema = () => {
 //   const sql = fs.readFileSync("database.sql", "utf8");
 //   // Check if the "votes" table exists
-//   pool.query("SELECT to_regclass($$public.votes$$)", (err, result) => {
+//   pool.query("SELECT to_regclass($$public.users$$)", (err, result) => {
 //     if (err) {
 //       console.error("Error checking for table existence:", err);
 //     } else {

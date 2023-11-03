@@ -1,4 +1,5 @@
 const axios = require("axios");
+const pool = require("../db");
 
 module.exports = {
   getDetails: async (req, res) => {
@@ -57,4 +58,19 @@ module.exports = {
       console.error(error);
     }
   },
+  addFavorite:async(req,res)=>{
+    try {
+      const {id,userId} = req.body;
+      console.log(typeof id,"body");
+      const result= await pool.query("UPDATE users SET recipes = array_append(recipes, $1) WHERE id = $2 RETURNING *",[id,userId])
+      console.log(result?.rows[0]?.recipes,"jghgj");
+      if(result?.rowCount>0){
+        res.status(200).send({recipes:result?.rows[0]?.recipes,message:'Recipe added successfully'})
+      }else{
+        res.status(403).send({message:"Something error while adding recipe !"})
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 };

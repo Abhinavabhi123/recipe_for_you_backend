@@ -4,9 +4,8 @@ CREATE DATABASE  recipe;
 
 CREATE TABLE  users (
     id serial PRIMARY KEY NOT NULL,
-    name text NOT NULL,
-    email text NOT NULL,
-    image  text NOT Null,
-    recipes text[]
+    name VARCHAR (80) NOT NULL,
+    email VARCHAR (100) NOT NULL,
+    image  VARCHAR (200) NOT Null,
+    recipes text[] UNIQUE 
 );
-
