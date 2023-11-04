@@ -12,7 +12,6 @@ module.exports = userAuth = async (req, res, next) => {
     }else{
         return res.status(401).send({ message: 'Unauthorized' });
     }
-    console.log(token);
   } catch (error) {
     console.error(error);
   }

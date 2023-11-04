@@ -25,7 +25,7 @@ const pool = new Pool({
 //       client.release();
 //     }
 //   } catch (error) {
-//     console.error("Error:", error);
+//     console.error("Err or:", error);
 //   } finally {
 //     client.release();
 //   }
