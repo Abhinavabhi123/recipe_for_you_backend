@@ -1,6 +1,6 @@
-const { decode } = require("jsonwebtoken");
 const jwt = require("jsonwebtoken");
 
+// Creating user authentication middleware using role
 module.exports = userAuth = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
@@ -13,6 +13,6 @@ module.exports = userAuth = async (req, res, next) => {
         return res.status(401).send({ message: 'Unauthorized' });
     }
   } catch (error) {
-    console.error(error);
+    res.send(500).send({message:"Internal server Error"})
   }
 };

@@ -2,14 +2,14 @@ const axios = require("axios");
 const pool = require("../db");
 
 module.exports = {
+  // Function for fetching all recipe data
   getDetails: async (req, res) => {
     try {
       await axios
         .get(
-          `${process.env.PRODUCTS_BASE_URL}complexSearch?number=30&apiKey=${process.env.API_KEY}`
+          `${process.env.PRODUCTS_BASE_URL}complexSearch?number=50&apiKey=${process.env.API_KEY}`
         )
         .then((response) => {
-          console.log(response.data);
           res.send(response.data);
         })
         .catch((error) => {
@@ -17,12 +17,12 @@ module.exports = {
           res.status(500).send({ message: "Error while fetching the data!!" });
         });
     } catch (error) {
-      console.error(error);
+      res.send(500).send({message:"Internal server Error"})
     }
   },
+  // Function for getting recipe details like( ingredients,instructions,nutrients)
   getRecipeDetails: async (req, res) => {
     try {
-      console.log("here");
       const id = req.params.id;
       const resultData = {
         ingredients: "",
@@ -34,7 +34,6 @@ module.exports = {
           `${process.env.PRODUCTS_BASE_URL}informationBulk?ids=${id}&apiKey=${process.env.API_KEY}`
         )
         .then((response) => {
-          console.log(response.data, "first");
           if (response.status === 200) {
             resultData.ingredients = response?.data[0]?.extendedIngredients;
             resultData.instructions = response?.data[0]?.instructions;
@@ -45,9 +44,7 @@ module.exports = {
                 )
                 .then((response) => {
                   if (response.status === 200) {
-                    console.log(response.data, "second");
                     resultData.nutations = response?.data?.nutrients;
-                    console.log(resultData);
                     res.status(200).send(resultData);
                   }
                 })
@@ -61,18 +58,17 @@ module.exports = {
           res.status(500).send({ message: "Recipe server not found" });
         });
     } catch (error) {
-      console.error(error);
+      res.send(500).send({message:"Internal server Error"})
     }
   },
+  // Function for add to favorite of recipe
   addFavorite: async (req, res) => {
     try {
       const { id, userId } = req.body;
-      console.log(typeof id, "body");
       const result = await pool.query(
         "UPDATE users SET recipes = array_append(recipes, $1) WHERE id = $2 RETURNING *",
         [id, userId]
       );
-      console.log(result?.rows[0]?.recipes, "jghgj");
       if (result?.rowCount > 0) {
         res.status(200).send({
           recipes: result?.rows[0]?.recipes,
@@ -84,9 +80,10 @@ module.exports = {
           .send({ message: "Something error while adding recipe !" });
       }
     } catch (error) {
-      console.error(error);
+      res.send(500).send({message:"Internal server Error"})
     }
   },
+  // Fetching the favorite recipe of the user 
   favoriteRecipes: async (req, res) => {
     try {
       const { id, userId } = req.query;
@@ -106,7 +103,6 @@ module.exports = {
             `${process.env.PRODUCTS_BASE_URL}informationBulk?ids=${id}&apiKey=${process.env.API_KEY}`
           )
           .then((response) => {
-            console.log(response,"response")
             for (let i = 0; i < response?.data.length; i++) {
               obj = {
                 title: response?.data[i]?.title,
@@ -120,7 +116,7 @@ module.exports = {
           })
       }
     } catch (error) {
-      console.error(error);
+      res.send(500).send({message:"Internal server Error"})
     }
   },
 };

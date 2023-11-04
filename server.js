@@ -8,6 +8,7 @@ const recipeRoute = require("./Router/recipeRoute")
 const userRoute = require('./Router/userRoute')
 const pool = require('./db')
 
+// configuring dotenv
 require("dotenv").config();
 
 // Middleware
@@ -16,7 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser())
 app.use(morgan('dev'))
 
-
+// connecting postgresql database
 pool.connect((err) => {
   if (err) {
     console.error('Error connecting to PostgreSQL:..', err);
