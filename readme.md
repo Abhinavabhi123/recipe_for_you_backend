@@ -10,8 +10,8 @@ This Node.js server provides the essential server functionality for the recipe w
 * **Postgresql in Node.js server.**
 * **Middle ware for user authentication.**
 * **Implements JWT token-based authorization.**
-* **Listing recipes in the user side**
-* **Responsive user interface**
+* **Follows MVC Architecture**
+* **Rest ful API**
 
 
 ## Requirements
